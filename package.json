@@ -7,5 +7,9 @@
   },
   "author": "Gersoncs",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@apollo/server": "^5.5.0",
+    "graphql": "^16.13.2"
+  }
 }
