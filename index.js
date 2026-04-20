@@ -24,7 +24,7 @@ let persons = [
   },
 ]
 
-const typeDefs = `
+const typeDefs = /* GraphQL */ `
   type Person {
     name: String!
     phone: String
