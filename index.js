@@ -49,18 +49,18 @@ const resolvers = {
   Query: {
     personCount: () => persons.length,
     allPersons: () => persons,
-    findPerson: (root, args) =>
-      persons.find(p => p.name === args.name)
+    findPerson: (root, args) => persons.find((p) => p.name === args.name),
   },
   Person: {
-    address: (root) => {
-      return {
-        street: root.street,
-        city: root.city
-      }
-    }
-  }
 
+    address: ({ street, city }) => {
+      return {
+
+        street,
+        city,
+      }
+    },
+  },
 }
 
 const server = new ApolloServer({
