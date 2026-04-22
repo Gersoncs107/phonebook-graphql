@@ -25,10 +25,16 @@ let persons = [
 ]
 
 const typeDefs = /* GraphQL */ `
+
+  type Address {
+    street: String!
+    city: String!
+  }
+
   type Person {
     name: String!
     phone: String
-    street: String!
+    address: Address!
     city: String! 
     id: ID!
   }
