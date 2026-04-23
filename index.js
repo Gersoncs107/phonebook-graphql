@@ -70,6 +70,13 @@ const resolvers = {
       }
     },
   },
+   Mutation: {
+    addPerson: (root, args) => {
+      const person = { ...args, id: uuid() }
+      persons = persons.concat(person)
+      return person
+    }
+  }  
 }
 
 const server = new ApolloServer({
