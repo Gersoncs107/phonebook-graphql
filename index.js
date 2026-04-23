@@ -43,6 +43,15 @@ const typeDefs = /* GraphQL */ `
     allPersons: [Person!]!
     findPerson(name: String!): Person
   }
+
+  type Mutation {
+  addPerson(
+    name: String!
+    phone: String
+    street: String!
+    city: String!
+  ): Person
+}
 `
 
 const resolvers = {
