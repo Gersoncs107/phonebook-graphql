@@ -65,7 +65,7 @@ const typeDefs = /* GraphQL */ `
 const resolvers = {
   Query: {
   personCount: () => persons.length,
-  // highlight-start
+
   allPersons: (root, args) => {
     if (!args.phone) {
       return persons
