@@ -65,7 +65,12 @@ const typeDefs = /* GraphQL */ `
 const resolvers = {
   Query: {
     personCount: () => persons.length,
-    allPersons: () => persons,
+    allPersons: (root, args) => {
+      if (args.phone === 'YES') {
+        return persons.filter((p) => p.phone)
+      }
+      return persons
+    },
     findPerson: (root, args) => persons.find((p) => p.name === args.name),
   },
   Person: {
