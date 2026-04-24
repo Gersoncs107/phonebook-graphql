@@ -40,11 +40,16 @@ const typeDefs = /* GraphQL */ `
     id: ID!
   }
 
-  type Query {
-    personCount: Int!
-    allPersons: [Person!]!
-    findPerson(name: String!): Person
-  }
+  enum YesNo {
+  YES
+  NO
+}
+
+ type Query {
+  personCount: Int!
+  allPersons(phone: YesNo): [Person!]!
+  findPerson(name: String!): Person
+}
 
   type Mutation {
   addPerson(
@@ -54,6 +59,7 @@ const typeDefs = /* GraphQL */ `
     city: String!
   ): Person
 }
+
 `
 
 const resolvers = {
