@@ -64,15 +64,22 @@ const typeDefs = /* GraphQL */ `
 
 const resolvers = {
   Query: {
-    personCount: () => persons.length,
-    allPersons: (root, args) => {
-      if (args.phone === 'YES') {
-        return persons.filter((p) => p.phone)
-      }
+  personCount: () => persons.length,
+  // highlight-start
+  allPersons: (root, args) => {
+    if (!args.phone) {
       return persons
-    },
-    findPerson: (root, args) => persons.find((p) => p.name === args.name),
+    }
+
+    const byPhone = (person) =>
+      args.phone === 'YES' ? person.phone : !person.phone
+
+    return persons.filter(byPhone)
   },
+ 
+  findPerson: (root, args) =>
+    persons.find(p => p.name === args.name)
+},
   Person: {
 
     address: ({ street, city }) => {
