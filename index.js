@@ -1,6 +1,7 @@
 const { ApolloServer } = require('@apollo/server')
 const { startStandaloneServer } = require('@apollo/server/standalone')
 const { v1: uuid } = require('uuid')
+const { GraphQLError } = require('graphql')
 
 let persons = [
   {
