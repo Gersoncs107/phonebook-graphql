@@ -110,6 +110,10 @@ const resolvers = {
       persons = persons.concat(person)
       return person
     }
+
+    editNumber: (root, args) => {
+      const person = persons.find(p => p.name === args.name)
+    }
   }  
 }
 
