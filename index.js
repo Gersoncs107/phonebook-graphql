@@ -62,7 +62,7 @@ const typeDefs = /* GraphQL */ `
   editNumber(
     name: String!
     phone: String!
-  )
+  ): Person
 }
 
 `
