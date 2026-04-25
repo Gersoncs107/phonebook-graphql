@@ -58,6 +58,11 @@ const typeDefs = /* GraphQL */ `
     street: String!
     city: String!
   ): Person
+
+  editNumber(
+    name: String!
+    phone: String!
+  )
 }
 
 `
