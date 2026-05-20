@@ -1,41 +1,14 @@
 const { GraphQLError } = require('graphql')
-const { v1: uuid } = require('uuid')
-
-let persons = [
-  {
-    name: 'Arto Hellas',
-    phone: '040-123543',
-    street: 'Tapiolankatu 5 A',
-    city: 'Espoo',
-    id: '3d594650-3436-11e9-bc57-8b80ba54c431',
-  },
-  {
-    name: 'Matti Luukkainen',
-    phone: '040-432342',
-    street: 'Malminkaari 10 A',
-    city: 'Helsinki',
-    id: '3d599470-3436-11e9-bc57-8b80ba54c431',
-  },
-  {
-    name: 'Venla Ruuska',
-    street: 'Nallemäentie 22 C',
-    city: 'Helsinki',
-    id: '3d599471-3436-11e9-bc57-8b80ba54c431',
-  },
-]
+const Person = require('./models/person')
 
 const resolvers = {
   Query: {
-    personCount: () => persons.length,
-    allPersons: (root, args) => {
-      if (!args.phone) {
-        return persons
-      }
-      const byPhone = (person) =>
-        args.phone === 'YES' ? person.phone : !person.phone
-      return persons.filter(byPhone)
+    personCount: async () => Person.collection.countDocuments(),
+    allPersons: async (root, args) => {
+      // filters missing
+      return Person.find({})
     },
-    findPerson: (root, args) => persons.find((p) => p.name === args.name),
+    findPerson: async (root, args) => Person.findOne({ name: args.name }),
   },
   Person: {
     address: ({ street, city }) => {
@@ -46,8 +19,10 @@ const resolvers = {
     },
   },
   Mutation: {
-    addPerson: (root, args) => {
-      if (persons.find((p) => p.name === args.name)) {
+    addPerson: async (root, args) => {
+      const nameExists = await Person.exists({ name: args.name })
+
+      if (nameExists) {
         throw new GraphQLError(`Name must be unique: ${args.name}`, {
           extensions: {
             code: 'BAD_USER_INPUT',
@@ -56,19 +31,18 @@ const resolvers = {
         })
       }
 
-      const person = { ...args, id: uuid() }
-      persons = persons.concat(person)
-      return person
+      const person = new Person({ ...args })
+      return person.save()
     },
-    editNumber: (root, args) => {
-      const person = persons.find((p) => p.name === args.name)
+    editNumber: async (root, args) => {
+      const person = await Person.findOne({ name: args.name })
+
       if (!person) {
         return null
       }
 
-      const updatedPerson = { ...person, phone: args.phone }
-      persons = persons.map((p) => (p.name === args.name ? updatedPerson : p))
-      return updatedPerson
+      person.phone = args.phone
+      return person.save()
     },
   },
 }
