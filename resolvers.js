@@ -5,8 +5,10 @@ const resolvers = {
   Query: {
     personCount: async () => Person.collection.countDocuments(),
     allPersons: async (root, args) => {
-      // filters missing
+      if (!args.phone) {
       return Person.find({})
+    }
+      return Person.find({ phone: args.phone === 'YES' })
     },
     findPerson: async (root, args) => Person.findOne({ name: args.name }),
   },
