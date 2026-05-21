@@ -1,4 +1,6 @@
 const { GraphQLError } = require('graphql')
+const jwt = require('jsonwebtoken')
+const User = require('./models/user')
 const Person = require('./models/person')
 
 const resolvers = {
