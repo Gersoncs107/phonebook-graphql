@@ -73,6 +73,20 @@ const resolvers = {
 
       return person
     },
+    createUser: async (root, args) => {
+    const user = new User({ username: args.username })
+
+    return user.save()
+      .catch(error => {
+        throw new GraphQLError(`Creating the user failed: ${error.message}`, {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.username,
+            error
+          }
+        })
+      })
+    },
   },
 }
 
