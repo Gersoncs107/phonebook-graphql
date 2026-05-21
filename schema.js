@@ -1,4 +1,10 @@
 const typeDefs = /* GraphQL */ `
+  type User {
+    username: String!
+    friends: [Person!]!
+    id: ID!
+  }
+  
   type Address {
     street: String!
     city: String!
