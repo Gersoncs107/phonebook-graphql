@@ -2,6 +2,7 @@ const { GraphQLError } = require('graphql')
 const jwt = require('jsonwebtoken')
 const User = require('./models/user')
 const Person = require('./models/person')
+require('dotenv').config()
 
 const resolvers = {
   Query: {
