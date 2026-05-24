@@ -123,6 +123,38 @@ const resolvers = {
 
     return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
     },
+
+      addAsFriend: async (root, args, { currentUser }) => {
+    if (!currentUser) {
+      throw new GraphQLError('not authenticated', {
+        extensions: { code: 'UNAUTHENTICATED' },
+      })
+    }
+
+    const nonFriendAlready = (person) =>
+      !currentUser.friends
+        .map((f) => f._id.toString())
+        .includes(person._id.toString())
+
+    const person = await Person.findOne({ name: args.name })
+
+    if (!person) {
+      throw new GraphQLError("The name didn't found", {
+        extensions: {
+          code: 'BAD_USER_INPUT',
+          invalidArgs: args.name,
+        },
+      })
+    }
+
+    if (nonFriendAlready(person)) {
+      currentUser.friends = currentUser.friends.concat(person)
+    }
+
+    await currentUser.save()
+
+    return currentUser
+  },
   },
 }
 //Authorization bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hZHJ1Z2EiLCJpZCI6IjZhMGZiMmQ0MDU4OWM3YzU5YjIwYjI0NCIsImlhdCI6MTc3OTU3NzY5MX0.yosDb07itWK6p8f0enZFTXpklMzNjb0LeWGMVLOdEpc
