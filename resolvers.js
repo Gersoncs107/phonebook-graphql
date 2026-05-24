@@ -29,6 +29,16 @@ const resolvers = {
   },
   Mutation: {
     addPerson: async (root, args) => {
+      const currentUser = context.currentUser
+ 
+    if (!currentUser) {
+      throw new GraphQLError('not authenticated', {
+        extensions: {
+          code: 'UNAUTHENTICATED',
+        }
+      })
+    }
+
       const nameExists = await Person.exists({ name: args.name })
 
       if (nameExists) {
