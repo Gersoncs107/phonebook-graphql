@@ -124,7 +124,7 @@ const resolvers = {
     return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
     },
 
-      addAsFriend: async (root, args, { currentUser }) => {
+    addAsFriend: async (root, args, { currentUser }) => {
     if (!currentUser) {
       throw new GraphQLError('not authenticated', {
         extensions: { code: 'UNAUTHENTICATED' },
