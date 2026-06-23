@@ -31,12 +31,35 @@ const getUserFromAuthHeader = async (auth) => {
 const startServer = async (port) => {
   const app = express()
   const httpServer = http.createServer(app)
- 
-const wsServer = new WebSocketServer({
+
+  // highlight-start
+  const wsServer = new WebSocketServer({
     server: httpServer,
     path: '/',
   })
  
+  const schema = makeExecutableSchema({ typeDefs, resolvers })
+  const serverCleanup = useServer({ schema }, wsServer)
+  // highlight-end
+
+  const server = new ApolloServer({
+    // highlight-start
+    schema, 
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              await serverCleanup.dispose();
+            },
+          }
+        },
+      },
+    ],
+    // highlight-end
+  })
+
   await server.start()
  
   app.use(
