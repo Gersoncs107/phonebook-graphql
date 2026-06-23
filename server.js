@@ -1,3 +1,6 @@
+const { WebSocketServer } = require('ws')
+const { useServer } = require('graphql-ws/use/ws')
+
 const { ApolloServer } = require('@apollo/server')
 // highlight-start
 const {
