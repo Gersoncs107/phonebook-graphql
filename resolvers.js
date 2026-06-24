@@ -5,6 +5,8 @@ const User = require('./models/user')
 const Person = require('./models/person')
 require('dotenv').config()
 
+const pubsub = new PubSub()
+
 const resolvers = {
   Query: {
     personCount: async () => Person.collection.countDocuments(),
