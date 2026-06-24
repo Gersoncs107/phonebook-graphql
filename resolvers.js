@@ -160,6 +160,11 @@ const resolvers = {
     return currentUser
   },
   },
+  Subscription: {
+    personAdded: {
+      subscribe: () => pubsub.asyncIterator(['PERSON_ADDED'])
+    },
+  },
 }
 //Authorization bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hZHJ1Z2EiLCJpZCI6IjZhMGZiMmQ0MDU4OWM3YzU5YjIwYjI0NCIsImlhdCI6MTc3OTU3NzY5MX0.yosDb07itWK6p8f0enZFTXpklMzNjb0LeWGMVLOdEpc
 module.exports = resolvers
