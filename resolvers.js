@@ -151,7 +151,7 @@ const resolvers = {
   },
   Subscription: {
     personAdded: {
-      subscribe: () => pubsub.asyncIterableIterator('PERSON_ADDED'),
+      subscribe: () => pubsub.asyncIterator('PERSON_ADDED'),
     },
   },
 }
