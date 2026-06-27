@@ -43,22 +43,21 @@ const startServer = async (port) => {
   // highlight-end
 
   const server = new ApolloServer({
-    // highlight-start
-    schema, 
-    plugins: [
-      ApolloServerPluginDrainHttpServer({ httpServer }),
-      {
-        async serverWillStart() {
-          return {
-            async drainServer() {
-              await serverCleanup.dispose();
-            },
-          }
-        },
+  schema,
+  plugins: [
+    ApolloServerPluginDrainHttpServer({ httpServer }),
+    ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await serverCleanup.dispose()
+          },
+        }
       },
-    ],
-    // highlight-end
-  })
+    },
+  ],
+})
 
   await server.start()
  
