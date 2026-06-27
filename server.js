@@ -5,7 +5,12 @@ const { ApolloServer } = require('@apollo/server')
 // highlight-start
 const {
   ApolloServerPluginDrainHttpServer,
+} = require('@apollo/server/plugin/drainHttpServer')
+
+const {
+  ApolloServerPluginLandingPageLocalDefault,
 } = require('@apollo/server/plugin/landingPage/default')
+
 const { expressMiddleware } = require('@as-integrations/express5')
 const cors = require('cors')
 const express = require('express')
