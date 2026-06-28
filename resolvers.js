@@ -150,10 +150,10 @@ const resolvers = {
     },
   },
   Subscription: {
-    personAdded: {
-      subscribe: () => pubsub.asyncIterator('PERSON_ADDED'),
-    },
+  personAdded: {
+    subscribe: () => pubsub.asyncIterableIterator('PERSON_ADDED'),
   },
+},
 }
 
 module.exports = resolvers
