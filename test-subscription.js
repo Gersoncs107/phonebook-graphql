@@ -1,6 +1,6 @@
 const { createClient } = require('graphql-ws')
 const ws = require('ws')
-const fetch = require('node-fetch') // se Node < 18; em Node 18+ fetch já é global
+// const fetch = require('node-fetch') // se Node < 18; em Node 18+ fetch já é global
 
 const HTTP_URL = 'http://localhost:4000'
 const WS_URL = 'ws://localhost:4000'
