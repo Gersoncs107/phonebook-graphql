@@ -6,7 +6,7 @@ const HTTP_URL = 'http://localhost:4000'
 const WS_URL = 'ws://localhost:4000'
 
 // ---- Configurações: ajuste aqui ----
-const USERNAME = 'gerson'
+const USERNAME = 'madruga'
 const PASSWORD = 'secret'
 // -------------------------------------
 
@@ -80,7 +80,7 @@ async function main() {
   // 4. Dispara a mutation addPerson
   console.log('➕ Criando person...')
   const result = await addPerson(token, {
-    name: 'Maria Silva',
+    name: 'Jose Silva',
     phone: '040-1234567',
     street: 'Rua das Flores',
     city: 'Recife',
